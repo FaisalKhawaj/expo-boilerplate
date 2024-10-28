@@ -12,6 +12,7 @@ touch expo-create-project.sh
 ##  You need to write below lines in that script file(create-project.sh)
 
 ```bash
+
 if [ "$#" -ne 1 ]; then
     echo "Usage: $0 <NewProjectName>"
     exit 1
@@ -24,19 +25,23 @@ REPO_URL="git@github.com:FaisalKhawaj/expo-boilerplate.git"
 git clone $REPO_URL $PROJECT_NAME
 
 
-cd $PROJECT_NAME
+cd $PROJECT_NAME || exit
+
 
 
 npm install
 
 
-npx react-native-rename $PROJECT_NAME 
+# Rename the project manually for Expo
+echo "Renaming project to $PROJECT_NAME in app.json and package.json..."
 
+# Update app.json with new project name and slug
+sed -i '' "s/\"name\": \".*\"/\"name\": \"$PROJECT_NAME\"/" app.json
+sed -i '' "s/\"slug\": \".*\"/\"slug\": \"$PROJECT_NAME\"/" app.json
 
-if [ $? -ne 0 ]; then
-  echo "Failed to rename project"
-  exit 1
-fi
+# Update package.json (optional but good practice)
+sed -i '' "s/\"name\": \".*\"/\"name\": \"$PROJECT_NAME\"/" package.json
+
 
 rm -rf .git
 git init
