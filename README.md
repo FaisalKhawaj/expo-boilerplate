@@ -6,7 +6,7 @@
 
 ## You need to create a script file (create-project.sh)
    ```bash
-touch create-project.sh
+touch expo-create-project.sh
 ```
 >**Note**: This is for MacOS users
 ##  You need to write below lines in that script file(create-project.sh)
@@ -58,14 +58,14 @@ ____________________________________
 ## Run the following command to make the script executable:
 
 ```bash
-chmod +x create-new-project.sh
+chmod +x expo-create-project.sh
 ```
 
 
 ## In order to clone this boilerplate with your ProjectName and bundle identifier, you need to run this command with name of your project instead of YourAppName and bundleIdentifer instead of com.your.bundle.identifier
 
 ```bash
-~/dev-scripts/create-new-project.sh YourAppName com.your.bundle.identifier
+~/dev-scripts/expo-create-project.sh YourAppName com.your.bundle.identifier
 ```
 
 
