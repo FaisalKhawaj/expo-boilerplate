@@ -30,7 +30,7 @@ cd $PROJECT_NAME
 npm install
 
 
-npx react-native-rename $PROJECT_NAME -b $BUNDLE_IDENTIFIER
+npx react-native-rename $PROJECT_NAME 
 
 
 if [ $? -ne 0 ]; then
