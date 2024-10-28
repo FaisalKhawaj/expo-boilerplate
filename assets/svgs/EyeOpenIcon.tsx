@@ -1,0 +1,183 @@
+import * as React from 'react';
+import Svg, {Path, SvgProps} from 'react-native-svg';
+
+export const EyeOpenIcon = (
+  props: React.JSX.IntrinsicAttributes &
+    React.JSX.IntrinsicClassAttributes<Svg> &
+    Pick<
+      Readonly<SvgProps>,
+      | 'width'
+      | 'height'
+      | 'viewBox'
+      | 'color'
+      | 'title'
+      | 'children'
+      | 'opacity'
+      | 'fill'
+      | 'fillOpacity'
+      | 'fillRule'
+      | 'stroke'
+      | 'strokeWidth'
+      | 'strokeOpacity'
+      | 'strokeDasharray'
+      | 'strokeDashoffset'
+      | 'strokeLinecap'
+      | 'strokeLinejoin'
+      | 'strokeMiterlimit'
+      | 'vectorEffect'
+      | 'clipRule'
+      | 'clipPath'
+      | 'translate'
+      | 'translateX'
+      | 'translateY'
+      | 'origin'
+      | 'originX'
+      | 'originY'
+      | 'scale'
+      | 'scaleX'
+      | 'scaleY'
+      | 'skew'
+      | 'skewX'
+      | 'skewY'
+      | 'rotation'
+      | 'x'
+      | 'y'
+      | 'transform'
+      | 'pointerEvents'
+      | 'onStartShouldSetResponder'
+      | 'onMoveShouldSetResponder'
+      | 'onResponderEnd'
+      | 'onResponderGrant'
+      | 'onResponderReject'
+      | 'onResponderMove'
+      | 'onResponderRelease'
+      | 'onResponderStart'
+      | 'onResponderTerminationRequest'
+      | 'onResponderTerminate'
+      | 'onStartShouldSetResponderCapture'
+      | 'onMoveShouldSetResponderCapture'
+      | 'disabled'
+      | 'onPress'
+      | 'onPressIn'
+      | 'onPressOut'
+      | 'onLongPress'
+      | 'delayPressIn'
+      | 'delayPressOut'
+      | 'delayLongPress'
+      | 'id'
+      | 'marker'
+      | 'markerStart'
+      | 'markerMid'
+      | 'markerEnd'
+      | 'mask'
+      | 'onLayout'
+      | 'accessibilityLabel'
+      | 'accessible'
+      | 'testID'
+      | 'font'
+      | 'fontStyle'
+      | 'fontVariant'
+      | 'fontWeight'
+      | 'fontStretch'
+      | 'fontSize'
+      | 'fontFamily'
+      | 'textAnchor'
+      | 'textDecoration'
+      | 'letterSpacing'
+      | 'wordSpacing'
+      | 'kerning'
+      | 'fontFeatureSettings'
+      | 'fontVariantLigatures'
+      | 'fontVariationSettings'
+      | 'hitSlop'
+      | 'needsOffscreenAlphaCompositing'
+      | 'removeClippedSubviews'
+      | 'style'
+      | 'nativeID'
+      | 'collapsable'
+      | 'renderToHardwareTextureAndroid'
+      | 'focusable'
+      | 'tabIndex'
+      | 'shouldRasterizeIOS'
+      | 'isTVSelectable'
+      | 'hasTVPreferredFocus'
+      | 'tvParallaxProperties'
+      | 'tvParallaxShiftDistanceX'
+      | 'tvParallaxShiftDistanceY'
+      | 'tvParallaxTiltAngle'
+      | 'tvParallaxMagnification'
+      | 'onTouchStart'
+      | 'onTouchMove'
+      | 'onTouchEnd'
+      | 'onTouchCancel'
+      | 'onTouchEndCapture'
+      | 'onPointerEnter'
+      | 'onPointerEnterCapture'
+      | 'onPointerLeave'
+      | 'onPointerLeaveCapture'
+      | 'onPointerMove'
+      | 'onPointerMoveCapture'
+      | 'onPointerCancel'
+      | 'onPointerCancelCapture'
+      | 'onPointerDown'
+      | 'onPointerDownCapture'
+      | 'onPointerUp'
+      | 'onPointerUpCapture'
+      | 'accessibilityActions'
+      | 'aria-label'
+      | 'accessibilityRole'
+      | 'accessibilityState'
+      | 'aria-busy'
+      | 'aria-checked'
+      | 'aria-disabled'
+      | 'aria-expanded'
+      | 'aria-selected'
+      | 'accessibilityHint'
+      | 'accessibilityValue'
+      | 'aria-valuemax'
+      | 'aria-valuemin'
+      | 'aria-valuenow'
+      | 'aria-valuetext'
+      | 'onAccessibilityAction'
+      | 'importantForAccessibility'
+      | 'aria-hidden'
+      | 'aria-modal'
+      | 'role'
+      | 'accessibilityLabelledBy'
+      | 'aria-labelledby'
+      | 'accessibilityLiveRegion'
+      | 'aria-live'
+      | 'accessibilityElementsHidden'
+      | 'accessibilityViewIsModal'
+      | 'onAccessibilityEscape'
+      | 'onAccessibilityTap'
+      | 'onMagicTap'
+      | 'accessibilityIgnoresInvertColors'
+      | 'accessibilityLanguage'
+    > & {readonly preserveAspectRatio?: string | undefined} & {},
+) => {
+  const {width, height} = props;
+  return (
+    <Svg
+      width={width || 800}
+      height={height || 800}
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}>
+      <Path
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M12 5C5.636 5 2 12 2 12s3.636 7 10 7 10-7 10-7-3.636-7-10-7Z"
+      />
+      <Path
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+      />
+    </Svg>
+  );
+};
