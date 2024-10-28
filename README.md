@@ -12,13 +12,12 @@ touch expo-create-project.sh
 ##  You need to write below lines in that script file(create-project.sh)
 
 ```bash
-if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <NewProjectName> <BundleIdentifier>"
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <NewProjectName>"
     exit 1
 fi
 
 PROJECT_NAME=$1
-BUNDLE_IDENTIFIER=$2
 
 REPO_URL="git@github.com:FaisalKhawaj/expo-boilerplate.git"
 
