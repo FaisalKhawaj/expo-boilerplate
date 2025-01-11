@@ -1,7 +1,6 @@
 import {
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Slot, Stack } from "expo-router";
@@ -11,6 +10,8 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { AuthProvider } from "@/src/context/AuthContext";
+import { ThemeProvider } from "@/src/context/ThemeProvider";
+import { PaperProvider } from "react-native-paper";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -32,10 +33,12 @@ export default function RootLayout() {
   }
   console.log("_layout");
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider>
+          <PaperProvider>
       <AuthProvider>
         <Slot />
       </AuthProvider>
+      </PaperProvider>
     </ThemeProvider>
   );
 }

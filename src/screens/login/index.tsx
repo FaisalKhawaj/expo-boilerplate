@@ -21,6 +21,8 @@ import { CustomTextInput } from "@/components/CustomTextInput";
 import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/src/context/AuthContext";
 import { SecureStorageHelper } from "@/src/helpers/SecureStorageHelper";
+import { translate } from "@/src/locales";
+import { LabelButton, LabelButtonVariation } from "@/components/LabelButton";
 
 const { width, height } = Dimensions.get("window");
 
@@ -68,7 +70,7 @@ export const Login = () => {
             }
             style={{ flexGrow: 1, padding: 20 }}
           >
-            <Text style={globalStyles.screenTitle}>Sign in</Text>
+            <Text style={globalStyles.screenTitle}>{translate('login')}</Text>
             <View style={{ marginTop: 20 }} />
 
             <View style={{ marginTop: 50 }} />
@@ -76,6 +78,7 @@ export const Login = () => {
             <CustomTextInput
               control={control}
               name={"email"}
+              placeHolder={translate('email')}
               isPortrait={true}
               keyboardType="email-address"
               returnKeyType="done"
@@ -93,6 +96,7 @@ export const Login = () => {
             <CustomTextInput
               control={control}
               name={"password"}
+              placeHolder={translate('password')}
               keyboardType="default"
               returnKeyType="done"
               isRequired={true}
@@ -106,14 +110,17 @@ export const Login = () => {
               // style={{ width: containerWidth }}
             />
             <View style={{ marginTop: 30 }} />
-            <TouchableOpacity
-              activeOpacity={0.8}
-              // onPress={handleLogin}
+           
+
+
+           <LabelButton
+              disabled={false}
+              title={translate('login')}
               onPress={handleSubmit(handleLogin)}
-              style={[globalStyles.buttonStyle, {}]}
+              variation={LabelButtonVariation.success}
             >
-              <Text style={[globalStyles.buttonText]}>Login</Text>
-            </TouchableOpacity>
+              {translate('login')}
+            </LabelButton>
             <View style={{ marginTop: 20 }} />
             <Text style={[globalStyles.dontHaveAcc, { textAlign: "center" }]}>
               Don't have an account?{" "}
