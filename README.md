@@ -1,15 +1,16 @@
-
 # Making new project from this boilerplate with your new project name and a new bundleIdentifier
 
->**Note**: I had create-project.sh in dev-scripts folder ,so you can create dev-scripts folder and can add create-project.sh in that folder.
-
+> **Note**: I had create-project.sh in dev-scripts folder ,so you can create dev-scripts folder and can add create-project.sh in that folder.
 
 ## You need to create a script file (create-project.sh)
-   ```bash
-touch expo-create-project.sh
+
+```bash
+touch create-expo-project.sh
 ```
->**Note**: This is for MacOS users
-##  You need to write below lines in that script file(create-project.sh)
+
+> **Note**: This is for MacOS users
+
+## You need to write below lines in that script file(create-project.sh)
 
 ```bash
 
@@ -57,24 +58,20 @@ fi
 echo "Project $PROJECT_NAME created successfully"
 
 ```
-____________________________________
+
+---
 
 ## Run the following command to make the script executable:
 
 ```bash
-chmod +x expo-create-project.sh
+chmod +x create-expo-project.sh
 ```
-
 
 ## In order to clone this boilerplate with your ProjectName and bundle identifier, you need to run this command with name of your project instead of YourAppName and bundleIdentifer instead of com.your.bundle.identifier
 
 ```bash
 ~/dev-scripts/expo-create-project.sh YourAppName
 ```
-
-
-
-
 
 # Welcome to your Expo app 👋
 
