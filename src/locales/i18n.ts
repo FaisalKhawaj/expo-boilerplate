@@ -1,41 +1,51 @@
-import { getLocales,  } from 'expo-localization';
-
-import {I18n} from 'i18n-js';
+import i18n from 'i18next';
+import {initReactI18next,useTranslation} from 'react-i18next';
+import translationEN from './en.json';
+import translationSP from './sp.json';
 import {Translations} from './localeTypes';
 
-const translations: Record<string, Translations> = {
+const resources = {
   en: {
-    account: 'Account',
-    browse: 'Browse',
-    sign_up: 'Sign up',
-    login: 'Login',
-    toggle_theme: 'Toggle Theme',
-    email:'Email',
-    password:"Password"
-  },
-  sp: {
-    account: 'Cuenta',
-    browse: 'Navegar',
-    sign_up: 'Registrarse',
-    login: 'Login',
-    toggle_theme: 'Toggle Theme',
-    email:'Email',
-    password:"Password"
+    translation:translationEN,
+   },
+   sp: {
+    translation:translationSP,
   },
 };
 
-const localesInformation = getLocales() || [];
-const {languageCode = 'en'} =
-  localesInformation.length > 0 ? localesInformation[0] : {languageCode: 'en'}; // The preferred one
-const i18n = new I18n();
-i18n.locale = languageCode || 'en';
-i18n.translations = translations;
+i18n.use(initReactI18next).init({
+  // compatibilityJSON: 'v3',
+  fallbackLng: 'en',
+  resources,
+  lng: 'en', // Set initial language or use browser/user settings
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
-// Type-safe wrapper for `i18n.t()` that only allows the valid keys defined in the `Translations` type
-function translate(key: keyof Translations): string {
-  return i18n.t(key);
+// Create the translate function
+function translate(
+  key: keyof Translations,
+  options?: Record<string, any>,
+): string {
+  return i18n.t(key, options);
 }
 
-export {translate, i18n};
+// Optionally, create a type-safe hook for React components
+
+function useTypedTranslation() {
+  const {t, ...rest} = useTranslation();
+
+  const typedT = (key: keyof Translations, options?: Record<string, any>) => {
+    return t(key, options);
+  };
+
+  return {t: typedT, ...rest};
+}
+
+export {translate, useTypedTranslation, i18n}; // Export both translate and the i18n instance
+
+export default i18n;
+
 
 // export default i18n;

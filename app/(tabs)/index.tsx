@@ -4,6 +4,8 @@ import {
   Text,
   Platform,
   TouchableOpacity,
+  SafeAreaView,
+  View,
 } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
@@ -15,17 +17,12 @@ import { SecureStorageHelper } from "@/src/helpers/SecureStorageHelper";
 import { useAuth } from "@/src/context/AuthContext";
 
 export default function HomeScreen() {
-  const { setIsLoggedin } = useAuth();
+  const { setIsLoggedin }:any = useAuth();
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
+  <SafeAreaView>
+    <View style={{flex:1,padding:20,}}>
+
+
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={async () => {
@@ -39,7 +36,9 @@ export default function HomeScreen() {
       >
         <Text style={[globalStyles.buttonText]}>Logout</Text>
       </TouchableOpacity>
-    </ParallaxScrollView>
+      </View>
+      </SafeAreaView>
+
   );
 }
 
