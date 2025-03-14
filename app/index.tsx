@@ -1,43 +1,19 @@
-import { useAuth } from "@/src/context/AuthContext";
-import { SecureStorageHelper } from "@/src/helpers/SecureStorageHelper";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, SafeAreaView } from "react-native";
-import Login from "./(auth)";
-import { Colors } from "@/constants/Colors";
+import { useAuth } from "@/src/context/auth";
+import { Redirect } from "expo-router";
 
-export default function Page() {
-  const { isLoggedin, setIsLoggedin }: any = useAuth();
+export default function Index() {
+  const { isAuthenticated, isAuthCheckDone, user } = useAuth();
 
-  const [loading, setLoading] = useState(false);
-  const checkLoggedIn = async () => {
-    try {
-      setLoading(true);
-      //   const res = await AsyncStorage.getItem("LoggedIn");
-      const res = await SecureStorageHelper.getToken();
-      console.log("resres", res);
-      if (res) {
-        setIsLoggedin(true);
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log("error ", error);
+  if (!isAuthCheckDone) {
+    return null; // or a loading screen
+  }
+
+  // Redirect based on auth state
+  if (isAuthenticated) {
+    if (user?.didFinishOnboarding) {
+      return <Redirect href="/(main)/(tabs)" />;
     }
-  };
+  }
 
-  useEffect(() => {
-    checkLoggedIn();
-    if (isLoggedin) {
-      setIsLoggedin(true);
-      router.replace("/(tabs)");
-    }
-  }, []);
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.light.background }}>
-      {loading ? <ActivityIndicator size={"large"} /> : <Login />}
-    </SafeAreaView>
-  );
+  return <Redirect href="/(auth)/login" />;
 }

@@ -1,4 +1,5 @@
-import { Redirect, router } from "expo-router";
+import { Redirect, router, useLocalSearchParams } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import {
   SafeAreaView,
   View,
@@ -9,8 +10,11 @@ import {
   TouchableOpacity,
   Platform,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as Haptics from "expo-haptics";
+
 import { useForm } from "react-hook-form";
 import { LoginFormType } from "./login.interface";
 import { fonts } from "@/hooks/useCacheResources";
@@ -19,17 +23,35 @@ import { useValidations } from "@/src/validations/useValidations";
 import { useLoginProps } from "./useLoginProps";
 import { CustomTextInput } from "@/components/CustomTextInput";
 import { Colors } from "@/constants/Colors";
-import { useAuth } from "@/src/context/AuthContext";
 import { SecureStorageHelper } from "@/src/helpers/SecureStorageHelper";
 import { translate } from "@/src/locales";
 import { LabelButton, LabelButtonVariation } from "@/components/LabelButton";
+import { useEffect } from "react";
+import { useAuth } from "@/src/context/auth";
 
 const { width, height } = Dimensions.get("window");
 
 export const Login = () => {
   const { loginSchema } = useValidations();
-  const { isLoggedin, setIsLoggedin }: any = useAuth();
+  const { isAuthCheckDone, isAuthenticated }: any = useAuth();
+  const { message } = useLocalSearchParams<{ message?: string }>();
 
+  useEffect(() => {
+    if (isAuthCheckDone && isAuthenticated!) {
+      // Hide splash screen only when we're sure we should show login
+      SplashScreen.hideAsync().catch((e) =>
+        console.log("[LoginScreen] Error hiding splash screen:", e)
+      );
+    }
+  }, [isAuthenticated, isAuthCheckDone]);
+
+  useEffect(() => {
+    if (message) {
+      Alert.alert("Success", message);
+      // Clear the message from navigation state after showing
+      router.setParams({ message: undefined });
+    }
+  }, [message]);
   const { hidePassword, togglePassword } = useLoginProps();
   const handleSignup = () => {};
   const {
@@ -47,16 +69,13 @@ export const Login = () => {
 
   const handleLogin = async (data: LoginFormType) => {
     console.log("data:", data);
-    router.push("/(tabs)");
-    setIsLoggedin(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
     await SecureStorageHelper.setToken("access");
     await SecureStorageHelper.setRefreshToken("refresh");
     await SecureStorageHelper.setUserId(1);
   };
 
-  if (isLoggedin) {
-    return <Redirect href={"/(tabs)"} />;
-  }
   return (
     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
       <SafeAreaView
@@ -70,7 +89,7 @@ export const Login = () => {
             }
             style={{ flexGrow: 1, padding: 20 }}
           >
-            <Text style={globalStyles.screenTitle}>{translate('login')}</Text>
+            <Text style={globalStyles.screenTitle}>{translate("login")}</Text>
             <View style={{ marginTop: 20 }} />
 
             <View style={{ marginTop: 50 }} />
@@ -78,7 +97,7 @@ export const Login = () => {
             <CustomTextInput
               control={control}
               name={"email"}
-              placeHolder={translate('email')}
+              placeHolder={translate("email")}
               isPortrait={true}
               keyboardType="email-address"
               returnKeyType="done"
@@ -96,7 +115,7 @@ export const Login = () => {
             <CustomTextInput
               control={control}
               name={"password"}
-              placeHolder={translate('password')}
+              placeHolder={translate("password")}
               keyboardType="default"
               returnKeyType="done"
               isRequired={true}
@@ -110,16 +129,14 @@ export const Login = () => {
               // style={{ width: containerWidth }}
             />
             <View style={{ marginTop: 30 }} />
-           
 
-
-           <LabelButton
+            <LabelButton
               disabled={false}
-              title={translate('login')}
+              title={translate("login")}
               onPress={handleSubmit(handleLogin)}
               variation={LabelButtonVariation.success}
             >
-              {translate('login')}
+              {translate("login")}
             </LabelButton>
             <View style={{ marginTop: 20 }} />
             <Text style={[globalStyles.dontHaveAcc, { textAlign: "center" }]}>
