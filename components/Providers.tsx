@@ -1,7 +1,7 @@
 import {
   DarkTheme,
-  DefaultTheme,
   ThemeProvider,
+  DefaultTheme,
 } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
@@ -39,21 +39,19 @@ export function Providers({ children }: PropsWithChildren) {
 
   return (
     <NetworkProvider>
-      <QueryClientProvider client={queryClient}>
-        <I18nProvider>
-          <PaperProvider>
-            <AuthProvider>
-              <NotificationsProvider>
-                <ThemeProvider
-                  value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-                >
-                  {children}
-                </ThemeProvider>
-              </NotificationsProvider>
-            </AuthProvider>
-          </PaperProvider>
-        </I18nProvider>
-      </QueryClientProvider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <QueryClientProvider client={queryClient}>
+          <I18nProvider>
+            <PaperProvider>
+              <AuthProvider>
+                {/* <NotificationsProvider> */}
+                {children}
+                {/* </NotificationsProvider> */}
+              </AuthProvider>
+            </PaperProvider>
+          </I18nProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
     </NetworkProvider>
   );
 }

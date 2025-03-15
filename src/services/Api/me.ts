@@ -1,6 +1,6 @@
 import { api } from "../api/api";
+import { User } from "../auth/types";
 import { handleAuthResponse } from "../utils";
-import { User } from "./types";
 
 export const getMe = async (): Promise<User> => {
   const response = await api.get<User>("/auth/me");

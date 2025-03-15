@@ -1,8 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
 import { SessionProvider, User } from "../services/auth/types";
-import { getMe } from "../services/auth/me";
-import { logout } from "../services/auth/logout";
+import { getMe } from "../services/api/me";
+import { logout } from "../services/api/logout";
+import { router } from "expo-router";
 
 interface AuthState {
   isLoading: boolean;
@@ -64,19 +65,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signIn = async (user: User) => {
+    // console.log("singIn user>>", user);
     try {
       const userData = await getMe();
 
       if (!userData) {
         throw new Error("Invalid credentials");
       }
+      // Set sessionProvider from passed user if it exists
+      const updatedUserData = {
+        ...userData,
+        sessionProvider: user?.sessionProvider || userData.sessionProvider,
+        authProviders: user?.authProviders || userData.authProviders,
+      };
 
-      setState({
+      if (!updatedUserData.emailVerified) {
+        router.replace(`/(auth)/${updatedUserData.email}/verify`);
+        return;
+      }
+      setState((prev) => ({
+        ...prev,
         isAuthenticated: true,
-        user: userData,
-        isLoading: false,
-        isAuthCheckDone: true,
-      });
+        user: updatedUserData,
+      }));
+      if (updatedUserData.didFinishOnboarding) {
+        console.log(
+          `[Auth] User has completed onboarding, redirecting to home`
+        );
+        router.replace("/(main)/(tabs)");
+      } else {
+        console.log(
+          `[Auth] User has NOT completed onboarding, redirecting to onboarding`
+        );
+        // router.replace("/(onboarding)/screen1");
+      }
     } catch (error) {
       console.error("[Auth] Error during sign-in:", error);
       throw error;
