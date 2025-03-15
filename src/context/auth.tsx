@@ -4,6 +4,8 @@ import { SessionProvider, User } from "../services/auth/types";
 import { getMe } from "../services/api/me";
 import { logout } from "../services/api/logout";
 import { router } from "expo-router";
+import { Alert } from "react-native";
+import * as Haptics from "expo-haptics";
 
 interface AuthState {
   isLoading: boolean;
@@ -54,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthCheckDone: true,
       });
     } catch (error) {
-      console.error("[Auth] Error during session check:", error);
+      // console.error("[Auth] Error during session check:", error);
       setState({
         isLoading: false,
         isAuthenticated: false,
@@ -107,14 +109,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     try {
-      await logout();
-      queryClient.clear();
-      setState({
-        isLoading: false,
-        isAuthenticated: false,
-        user: null,
-        isAuthCheckDone: true,
-      });
+      Alert.alert("Logout", "Are you sure you want to logout?", [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Logout",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              await logout();
+              queryClient.clear();
+              setState({
+                isLoading: false,
+                isAuthenticated: false,
+                user: null,
+                isAuthCheckDone: true,
+              });
+            } catch (error) {
+              console.error("Error logging out:", error);
+              Alert.alert("Error", "Failed to logout. Please try again.");
+            }
+          },
+        },
+      ]);
     } catch (error) {
       console.error("[Auth] Error during sign-out:", error);
       setState({
