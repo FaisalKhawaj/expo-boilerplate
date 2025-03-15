@@ -1,21 +1,15 @@
 import React from "react";
-import { Redirect, router, useLocalSearchParams } from "expo-router";
+import {  router, useLocalSearchParams } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import {
   View,
-  Dimensions,
-  Keyboard,
-  KeyboardAvoidingView,
   Text,
   TouchableOpacity,
-  Platform,
-  TouchableWithoutFeedback,
   Alert,
 } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Haptics from "expo-haptics";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { useForm } from "react-hook-form";
 import { LoginFormType } from "./login.interface";
 import { fonts } from "@/hooks/useCacheResources";
@@ -23,7 +17,6 @@ import { globalStyles } from "@/src/styles/globalStyles";
 import { useValidations } from "@/src/validations/useValidations";
 import { useLoginProps } from "./useLoginProps";
 import { CustomTextInput } from "@/components/CustomTextInput";
-import { SecureStorageHelper } from "@/src/helpers/SecureStorageHelper";
 import { translate } from "@/src/locales";
 import { LabelButton, LabelButtonVariation } from "@/components/LabelButton";
 import { useEffect } from "react";
