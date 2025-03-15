@@ -1,3 +1,4 @@
+import "../global.css";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ import { Slot, useSegments, useRootNavigationState } from "expo-router";
 import { useAuth } from "@/src/context/auth";
 import { Providers } from "@/components/Providers";
 import RootStack from "./rootStack";
+import { verifyInstallation } from "nativewind";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -21,6 +23,8 @@ function AppContent() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
+
+  verifyInstallation();
 
   useEffect(() => {
     if (error) throw error;

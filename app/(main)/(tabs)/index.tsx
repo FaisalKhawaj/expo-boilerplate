@@ -1,44 +1,35 @@
 import {
-  Image,
   StyleSheet,
   Text,
-  Platform,
   TouchableOpacity,
   SafeAreaView,
   View,
 } from "react-native";
-
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { globalStyles } from "@/src/styles/globalStyles";
-import { SecureStorageHelper } from "@/src/helpers/SecureStorageHelper";
-import { useAuth } from "@/src/context/AuthContext";
+import * as Haptics from "expo-haptics";
+import { useAuth } from "@/src/context/auth";
+import { router } from "expo-router";
+import { LabelButton, LabelButtonVariation } from "@/components/LabelButton";
 
 export default function HomeScreen() {
-  const { setIsLoggedin }:any = useAuth();
+  // const { setIsLoggedin }:any = useAuth();
+  const { signOut } = useAuth();
+  const handleLogout = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    await signOut();
+    router.replace("/(auth)/login");
+  };
   return (
-  <SafeAreaView>
-    <View style={{flex:1,padding:20,}}>
-
-
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={async () => {
-          setIsLoggedin(false);
-          await SecureStorageHelper.removeRefreshToken();
-          await SecureStorageHelper.removeToken();
-          await SecureStorageHelper.removeUserId();
-        }}
-        // onPress={handleSubmit(handleLogin)}
-        style={[globalStyles.buttonStyle, {}]}
-      >
-        <Text style={[globalStyles.buttonText]}>Logout</Text>
-      </TouchableOpacity>
+    <SafeAreaView className="flex-1 bg-background-screen dark:bg-background-screen-dark">
+      <View className="flex-1 p-5 bg-background-screen dark:bg-background-screen-dark">
+        <LabelButton
+          onPress={() => handleLogout()}
+          variation={LabelButtonVariation.default}
+        >
+          Logout
+        </LabelButton>
       </View>
-      </SafeAreaView>
-
+    </SafeAreaView>
   );
 }
 
