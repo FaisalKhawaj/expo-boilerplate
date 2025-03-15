@@ -17,7 +17,7 @@ export default function HomeScreen() {
   const handleLogout = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     await signOut();
-    router.replace("/(auth)/login");
+
   };
   return (
     <SafeAreaView className="flex-1 bg-background-screen dark:bg-background-screen-dark">

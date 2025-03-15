@@ -128,6 +128,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 user: null,
                 isAuthCheckDone: true,
               });
+                router.replace("/(auth)/login");
             } catch (error) {
               console.error("Error logging out:", error);
               Alert.alert("Error", "Failed to logout. Please try again.");
